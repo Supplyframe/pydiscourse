@@ -28,6 +28,9 @@ class DiscourseClient(object):
     def user(self, username):
         return self._get("/users/{0}.json".format(username))["user"]
 
+    def user_by_id(self, user_id):
+        return self._get("/admin/users/{0}.json".format(user_id))
+
     def create_user(self, name, username, email, password, **kwargs):
         """active='true', to avoid sending activation emails"""
         r = self._get("/users/hp.json")

@@ -41,6 +41,11 @@ class TestUser(ClientBaseTestCase):
         self.client.user("someuser")
         self.assertRequestCalled(request, "GET", "/users/someuser.json")
 
+    def test_user_by_id(self, request):
+        prepare_response(request)
+        self.client.user_by_id(12345)
+        self.assertRequestCalled(request, "GET", "/admin/users/12345.json")
+
     def test_create_user(self, request):
         prepare_response(request)
         self.client.create_user(
