@@ -56,7 +56,7 @@ class DiscourseClient(object):
         )
 
     def list_users(self, type, **kwargs):
-        """ optional user search: filter='test@example.com' or filter='scott' """
+        """optional user search: filter='test@example.com' or filter='scott'"""
         return self._get("/admin/users/list/{0}.json".format(type), **kwargs)
 
     def log_out_user(self, userid):
@@ -244,9 +244,7 @@ class DiscourseClient(object):
     def site_settings(self, **kwargs):
         for setting, value in kwargs.items():
             setting = setting.replace(" ", "_")
-            self._request(
-                "PUT", "/admin/site_settings/{0}".format(setting), {setting: value}
-            )
+            self._put("/admin/site_settings/{0}".format(setting), **{setting: value})
 
     def _get(self, path, **kwargs):
         return self._request("GET", path, kwargs)
@@ -297,7 +295,7 @@ class DiscourseClient(object):
         content_type = response.headers["content-type"]
         if content_type != json_content:
             # some calls return empty html documents
-            if response.content == "":
+            if response.content.decode("utf-8") == "":
                 return None
 
             raise DiscourseError(
