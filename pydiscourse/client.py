@@ -33,7 +33,7 @@ class DiscourseClient(object):
 
     def create_user(self, name, username, email, password, **kwargs):
         """active='true', to avoid sending activation emails"""
-        r = self._get("/users/hp.json")
+        r = self._get("/session/hp.json")
         challenge = r["challenge"][::-1]  # reverse challenge, discourse security check
         confirmations = r["value"]
         return self._post(
